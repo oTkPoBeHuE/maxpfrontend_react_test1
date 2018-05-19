@@ -1,31 +1,35 @@
-import React, { Component } from 'react';
-import Login from './components/login/login.jsx';
-import Main from './components/main/main.jsx';
-import Profile from './components/profile/profile.jsx';
+import React, { PureComponent } from 'react';
+import Login from './components/pages/login_page/login_page';
+import Home from './components/pages/home_page/home_page';
+import Profile from './components/pages/profile/profile';
+import News from './components/pages/news_page/news_page';
 
-export default class App extends Component {
-	constructor(props) {
-		super(props);
-		this.renderHref = this.renderHref.bind(this);
-	}
-	getNavigationList() {
-		return [{ text: 'На главную', href: '' }, { text: 'Новости', href: '' }, { text: 'Профиль', href: '' }];
-	}
-	renderHref({ href, text }, key) {
-		return (
-			<li key={text}>
-				<a href={href}>{text}</a>
-			</li>
-		);
-	}
+import { Switch, Route } from 'react-router-dom';
+import { NavigationLink, Navigation } from './components/navigation/navigation.jsx';
 
+import './style.css';
+// Rename Main to Home
+export default class App extends PureComponent {
 	render() {
 		return (
-			<div className="App">
-				<header className="App-header">
-					<ul>{this.getNavigationList().map(this.renderHref)}</ul>
+			<div className={'container bg-light'}>
+				<header className="mxpf1-navigation">
+					<Navigation>
+						<NavigationLink href="/">На главную</NavigationLink>
+						<NavigationLink href="/news">Новости</NavigationLink>
+						<NavigationLink href="/login">Вход</NavigationLink>
+						<NavigationLink href="/profile">Профиль</NavigationLink>
+					</Navigation>
 				</header>
-				<Main />
+				<div className={'d-flex justify-content-center'}>
+					<Switch>
+						<Route exact path="/" component={Home} />
+						<Route path="/news" component={News} />
+						<Route path="/login" component={Login} />
+						<Route path="/profile" component={Profile} />
+						{/* <Route component={NotFound} /> */}
+					</Switch>
+				</div>
 			</div>
 		);
 	}
