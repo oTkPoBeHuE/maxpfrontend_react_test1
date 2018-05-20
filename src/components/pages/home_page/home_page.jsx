@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 
 const specificationURL = 'https://vk.com/@maxpfrontend-testovoe-zadanie-1';
 const communityURL = 'https://vk.com/maxpfrontend';

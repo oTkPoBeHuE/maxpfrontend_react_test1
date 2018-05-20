@@ -1,18 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-//		return [{ text: 'На главную', href: '' }, { text: 'Новости', href: '' }, { text: 'Профиль', href: '' }];
+const navLinkProps = {
+	className: 'nav-link',
+	exact: true,
+	activeStyle: {
+		color: 'red'
+	}
+};
 
-export const Navigation = props => <nav className="nav">{props.children}</nav>;
-
-export const NavigationLink = ({ children, href }) => (
-	<NavLink
-		className="nav-link"
-		exact
-		activeStyle={{
-			color: 'red'
-		}}
-		to={href}>
-		{children}
-	</NavLink>
-);
+export default ({ routes }) => {
+	const renderNavigationLink = ({ path, name }, key) => (
+		<NavLink {...navLinkProps} to={path} key={key}>
+			{name}
+		</NavLink>
+	);
+	return <nav className="nav">{routes.map(renderNavigationLink)}</nav>;
+};

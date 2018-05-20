@@ -1,4 +1,4 @@
-import { LOG_IN, LOG_OUT, LOG_IN_FAILURE } from '../actions/session_actions';
+import { LOG_IN, LOG_OUT, LOG_IN_FAILURE } from 'action_types';
 
 const initialState = {
 	user: null,
@@ -11,7 +11,7 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				user: {
-					name: action.payload.name
+					name: action.payload.username
 				},
 				errorMsg: ''
 			};

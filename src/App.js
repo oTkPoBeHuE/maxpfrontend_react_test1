@@ -1,45 +1,41 @@
 import React, { PureComponent } from 'react';
-import Login from './components/pages/login_page/login_page';
-import Home from './components/pages/home_page/home_page';
-import Profile from './components/pages/profile/profile';
-import News from './components/pages/news_page/news_page';
+import { connect } from 'react-redux';
+// import { bindActionCreators } from 'redux';
 
-import { Switch, Route } from 'react-router-dom';
-import { NavigationLink, Navigation } from './components/navigation/navigation.jsx';
+import Login from 'components/pages/login_page/login_page';
+
+import Navigation from 'components/navigation/navigation.jsx';
+import RoutesComponent from 'components/routes_component/routes_component';
+
 import { withRouter } from 'react-router-dom';
 
-import './style.css';
-// Rename Main to Home
+import routes from 'routes/routes.js';
 
 class App extends PureComponent {
 	render() {
-		// console.log('location', this.props.match);
 		return (
 			<div className={'container bg-light'}>
 				<header className="mxpf1-navigation">
-					<Navigation>
-						<NavigationLink href="/">На главную</NavigationLink>
-						<NavigationLink href="/news">Новости</NavigationLink>
-						<NavigationLink href="/profile">Профиль</NavigationLink>
-						<NavigationLink href="/login">Вход</NavigationLink>
-					</Navigation>
+					<Navigation
+						routes={routes
+							.filter(route => route.isInNavBar)
+							.filter(route => !(route.path === '/login' && this.props.user))
+							.filter(route => !(route.path === '/logout' && !this.props.user))}
+					/>
 				</header>
 				<div className={'d-flex justify-content-center  mt-5'}>
-					<Switch>
-						<Route exact path="/" component={Home} />
-						<Route path="/news" component={News} />
-						<Route path="/login" component={Login} />
-						<Route path="/profile" component={Profile} />
-						{/* <Route component={NotFound} /> */}
-					</Switch>
+					<RoutesComponent routes={routes} isAutorized={!!this.props.user} loginPage={Login} />
 				</div>
 			</div>
 		);
 	}
 }
 
-export default withRouter(App);
-//
-// <p className="App-intro">
-// 	To get started, edit <code>src/App.js</code> and save to reload.
-// </p>
+const mapStateToProps = state => {
+	return {
+		user: state.session.user,
+		error: state.session.errorMsg
+	};
+};
+
+export default withRouter(connect(mapStateToProps, null)(App));
