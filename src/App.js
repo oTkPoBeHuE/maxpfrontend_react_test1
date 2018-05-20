@@ -1,9 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux';
-
 import Login from 'components/pages/login_page/login_page';
-
 import Navigation from 'components/navigation/navigation.jsx';
 import RoutesComponent from 'components/routes_component/routes_component';
 
