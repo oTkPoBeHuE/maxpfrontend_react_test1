@@ -6,22 +6,25 @@ import News from './components/pages/news_page/news_page';
 
 import { Switch, Route } from 'react-router-dom';
 import { NavigationLink, Navigation } from './components/navigation/navigation.jsx';
+import { withRouter } from 'react-router-dom';
 
 import './style.css';
 // Rename Main to Home
-export default class App extends PureComponent {
+
+class App extends PureComponent {
 	render() {
+		// console.log('location', this.props.match);
 		return (
 			<div className={'container bg-light'}>
 				<header className="mxpf1-navigation">
 					<Navigation>
 						<NavigationLink href="/">На главную</NavigationLink>
 						<NavigationLink href="/news">Новости</NavigationLink>
-						<NavigationLink href="/login">Вход</NavigationLink>
 						<NavigationLink href="/profile">Профиль</NavigationLink>
+						<NavigationLink href="/login">Вход</NavigationLink>
 					</Navigation>
 				</header>
-				<div className={'d-flex justify-content-center'}>
+				<div className={'d-flex justify-content-center  mt-5'}>
 					<Switch>
 						<Route exact path="/" component={Home} />
 						<Route path="/news" component={News} />
@@ -35,6 +38,7 @@ export default class App extends PureComponent {
 	}
 }
 
+export default withRouter(App);
 //
 // <p className="App-intro">
 // 	To get started, edit <code>src/App.js</code> and save to reload.
